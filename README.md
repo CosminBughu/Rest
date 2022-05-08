@@ -6,3 +6,10 @@ RestApi for Bachelor's Degree
 
 https://localhost:7006/api/account/users
 https://localhost:7006/api/account/signup
+
+{
+    "UserName": "Bianca123",
+    "Email": "biancatest31@email.com",
+    "Password": "Bebicaemic31*",
+    "ConfirmPassword": "Bebicaemic31*"
+}
