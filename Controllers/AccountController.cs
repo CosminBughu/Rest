@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rest.Models;
 using Rest.Repository;
@@ -17,6 +17,7 @@ namespace Rest.Controllers
         }
 
         [HttpPost("signup")]
+      
         public async Task<IActionResult> SignUp([FromBody] SignUpModel signUpModel)
         {
             var result = await _accountRepository.SignUpAsync(signUpModel);
@@ -28,6 +29,21 @@ namespace Rest.Controllers
             
             return Unauthorized();
         }
+
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn([FromBody] SignInModel signInModel)
+        {
+            var result = await _accountRepository.SignInAsync(signInModel);
+
+            if (string.IsNullOrEmpty(result))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(result);
+        }
+
+        [Authorize]
         [HttpGet("users")]
         public async Task<IActionResult> GetUsersAsync()
         {
