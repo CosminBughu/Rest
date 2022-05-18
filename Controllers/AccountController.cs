@@ -47,6 +47,10 @@ namespace Rest.Controllers
         [HttpGet("users")]
         public async Task<IActionResult> GetUsersAsync()
         {
+            if (Response.StatusCode.Equals(401))
+            {
+                return RedirectToAction("/signin");
+            }
             var result = await _accountRepository.GetUsersAsync();
             return Ok(result);
         }

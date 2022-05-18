@@ -54,6 +54,11 @@ builder.Services.AddAuthentication(option =>
 
 builder.Services.AddControllers();
 
+//builder.Services.ConfigureApplicationCookie(config =>
+//{
+//    config.LoginPath = "/signin";
+//});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,9 +67,11 @@ app.UseHttpsRedirection();
 
 app.UseCors();
 
+
 app.UseAuthentication();
 
 app.UseAuthorization();
+
 
 app.MapControllers();
 

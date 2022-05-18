@@ -36,7 +36,7 @@ namespace Rest.Repository
 
         public async Task<string> SignInAsync(SignInModel signInModel)
         {
-            var user = _userManager.FindByEmailAsync(signInModel.Email).Result;
+            var user = _userManager.FindByNameAsync(signInModel.UserName).Result;
             var result = await _signInManager.PasswordSignInAsync(user.UserName, signInModel.Password, false, false);
             if (!result.Succeeded)
             {
@@ -45,7 +45,7 @@ namespace Rest.Repository
 
             var authClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, signInModel.Email),
+                new Claim(ClaimTypes.Name, signInModel.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
             };
             var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
@@ -68,9 +68,7 @@ namespace Rest.Repository
                 Password = x.PasswordHash,
                 ConfirmPassword = x.PasswordHash
             }).ToListAsync();
-
             return users;
         }
-
     }
 }
